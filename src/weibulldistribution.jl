@@ -132,7 +132,7 @@ end
 
 
 function test(dist::TransitionWeibull)
-    rng=MersenneTwister()
+    rng=MersenneTwister(0)
     (λ, k)=dist.parameters
     ed=EmpiricalDistribution()
     for i in 1:10000
@@ -140,12 +140,12 @@ function test(dist::TransitionWeibull)
     end
     expected_mean=λ*gamma(1+1/k)
     actual_mean=mean(ed)
-    @debug("mean expected ", expected_mean, " actual ", actual_mean,
+    print("mean expected ", expected_mean, " actual ", actual_mean,
         " diff ", abs(expected_mean-actual_mean))
 
     expected_variance=λ^2*(gamma(1+2/k)-gamma(1+1/k)^2)
     obs_var=variance(ed)
-    @debug("variance expected ", expected_variance, " actual ", obs_var,
+    print("variance expected ", expected_variance, " actual ", obs_var,
         " diff ", abs(expected_variance-obs_var))
 
     min_value=min(ed)
@@ -155,7 +155,7 @@ function test(dist::TransitionWeibull)
         total+=ed.samples[i]^k
     end
     λ_estimator=(total/length(ed)-mink)^(1/k)
-    @debug("λ expected ", λ, " actual ", λ_estimator,
+    print("λ expected ", λ, " actual ", λ_estimator,
         " diff ", abs(λ-λ_estimator))
 
     numerator=0.0
@@ -168,7 +168,6 @@ function test(dist::TransitionWeibull)
     end
     k_est_inv=numerator/denominator - logsum/length(ed)
     k_est=1.0/k_est_inv
-    @debug("k expected ", k, " actual ", k_est,
+    print("k expected ", k, " actual ", k_est,
         " diff ", abs(k-k_est))
 end
-

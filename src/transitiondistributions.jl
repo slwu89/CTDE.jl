@@ -1,7 +1,7 @@
 
 using Distributions
-import Distributions: quantile, rand, cdf, logccdf, invlogccdf
-import Base: rand, push!, isless, length
+import Distributions: quantile, rand, cdf, logccdf, invlogccdf, ccdf
+import Base: rand, push!, isless, length, mean, min
 
 export TransitionDistribution, WrappedDistribution, TransitionExponential
 export TransitionWeibull, TransitionGamma, TransitionLogLogistic
@@ -598,4 +598,3 @@ function multiple_measures(eds::Array{EmpiricalDistribution,1})
     end
     nad
 end
-
